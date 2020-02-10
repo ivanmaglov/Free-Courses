@@ -1,0 +1,85 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link href="{% static "css/bootstrap4.min.css" %}" rel="stylesheet">
+   <link href="{% static "css/base.css" %}" rel="stylesheet">
+ <style>
+        #footer {
+            position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+            /* Height of the footer*/
+            height: 40px;
+            background: #007bff ;
+        }
+    </style>
+</head>
+<body>
+
+  <div id="header">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Courses</a>
+    <button class="navbar-toggler" aria-expanded="false" aria-controls="navbarColor02" aria-label="Toggle navigation" type="button" data-target="#navbarColor02" data-toggle="collapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url "course_list" %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item">
+           {% if request.user.is_authenticated %}
+          <a class="nav-link" href="{% url "logout" %}">Sign out</a>
+           {% else %}
+           <a class="nav-link " href="{% url "login" %}">Sign in</a>
+           {% endif %}
+        </li>
+            <li class="nav-item">
+          <a class="nav-link" href="{% url "student_course_list" %}">My courses</a>
+        </li>
+        <li class="nav-item">
+           {%  if request.user.is_staff %}
+          <a class="nav-link" href="{% url "course_create" %}">Create a new courses</a>
+        {% endif %}
+        </li>
+          <li class="nav-item">
+           {%  if request.user.is_staff %}
+          <a class="nav-link" href="{% url "manage_course_list" %}">Course Management Dashboard</a>
+        {% endif %}
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  </div>
+
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <br><br><br>
+  <div class="text-center" id="footer">Free courses
+                  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function() {
+      {% block domready %}
+      {% endblock %}
+    });
+  </script>
+</body>
+
+</html>
